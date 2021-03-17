@@ -21,13 +21,18 @@ class Minefield {
         }
     }
 
-    // Creates the MineField
+    /**
+     * Creates the MineField
+     **/ 
     generateField() {
         this.intializeField();
         this.initializeMines();
+        this.initializeSquares();
     }
 
-    // Fills the field with null values in the shape (height, width)
+    /**
+     * Fills the field with null values in the shape (height, width)
+     */
     intializeField() {
 
         for (let i = 0; i < this.height; i++) {
@@ -37,7 +42,9 @@ class Minefield {
         }
     }
 
-    // Populates the field with numMines mines randomly scattered around
+    /**
+     * Populates the field with numMines mines randomly scattered around
+     */
     initializeMines() {
         let m: number = this.numMines;
 
@@ -52,6 +59,70 @@ class Minefield {
 
             this.field[x][y] = "*";
             m--;
+        }
+    }
+
+    /**
+     * For each square, record the number of mines that are adjacent to it
+     */ 
+    initializeSquares() {
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < this.width; j++) {
+                if (this.field[i][j] === "*") {
+                    continue;
+                }
+
+                let numAdjacents: number = 0;       // the number of adjacent mines
+
+                let left: number = j - 1;
+                let right: number = j + 1;
+                let down: number = i + 1;
+                let up: number = i - 1;
+
+                if (left > 0) {                         // left
+                    if (this.field[i][left] === "*") {
+                        numAdjacents++;
+                    }
+                }
+                if (left > 0 && up > 0) {               // upper left
+                    if (this.field[up][left] === "*") {
+                        numAdjacents++;
+                    }
+                }
+                if (up > 0) {                           // up
+                    if (this.field[up][j] === "*") {
+                        numAdjacents++;
+                    }
+                }
+                if (up > 0 && right < this.width) {    // upper-right
+                    if (this.field[up][right] === "*") {
+                        numAdjacents++;
+                    }
+                }
+                if (right < this.width) {               // right
+                    if (this.field[i][right] === "*") {
+                        numAdjacents++;
+                    }
+                }
+                if (down < this.height && right < this.width) { // lower-right
+                    if (this.field[down][right] === "*") {
+                        numAdjacents++;
+                    }
+                }
+                if (down < this.height) {               // down
+                    if (this.field[down][j] === "*") {
+                        numAdjacents++;
+                    }
+                }
+                if (down < this.height && left > 0) {           // lower-left
+                    if (this.field[down][left] === "*") {
+                        numAdjacents++;
+                    }
+                }
+
+                this.field[i][j] = numAdjacents.toString()
+                
+            }
         }
     }
 
