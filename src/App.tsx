@@ -1,24 +1,21 @@
+// Default React imports
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+// Other imports
+import Minefield from "./model/Minefield";
+import Square from "./components/Square";
+
 function App() {
+
+  // test inputs
+  let testField: Minefield = new Minefield(3, 3, 1);
+  let grid: Array< Array<String> > = [["0", "1", "1"], ["0", "1", "*"], ["0", "1", "1"]]; 
+  testField.field = grid;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello world
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Square val={"*"}/>
     </div>
   );
 }
