@@ -7,7 +7,7 @@ import React, {useState} from 'react';
 let Square = (props: any) => {
 
     // STATE: whether or not this square's label is hidden
-    let [isHidden, setIsHidden] = useState(false);
+    let [isRevealed, setIsRevealed] = useState(false);
 
     // STATE:: whether or not this square has been flagged by the user
     let [isFlagged, setIsFlagged] = useState(false);
@@ -15,7 +15,7 @@ let Square = (props: any) => {
     // when the user clicks on the square, the label is revealed
     let revealLabel = (e: any) => {
         if (!isFlagged) {
-            setIsHidden(true);
+            setIsRevealed(true);
         }
     }
 
@@ -27,7 +27,7 @@ let Square = (props: any) => {
     }
 
     let label: String;
-    if (isHidden) {
+    if (isRevealed) {
         label = props.val;
     } else if (isFlagged) {
         label = "🇨🇦";
@@ -35,8 +35,18 @@ let Square = (props: any) => {
         label = "";
     }
 
+    // update the background color of squares which have been revealed
+    let style;
+    if (isRevealed) {
+        style = {
+            background: "grey"
+        };
+    } else {
+        style = {};
+    }
+
     return (
-        <button className="square" onClick={revealLabel} onContextMenu={flagSquare}>{label}</button>
+        <button className="square" style={style} onClick={revealLabel} onContextMenu={flagSquare}>{label}</button>
     )
 }
 
