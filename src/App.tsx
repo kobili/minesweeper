@@ -1,5 +1,5 @@
 // Default React imports
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 
 // Other imports
@@ -8,16 +8,20 @@ import Grid from './components/Grid';
 
 function App() {
 
-  // test inputs
-  // let testField: Minefield = new Minefield(3, 3, 1);
-  // testField.generateField();
-  // console.log(testField)
+  // STATE: Whether or not the game is over
+  let [isGameOver, setIsGameOver] = useState(false);
+
+  let endGame = () => {
+    console.log("Game over");
+    setIsGameOver(true);
+  }
+
   let testField: Minefield = new Minefield(9, 9, 10);
   testField.generateField();
 
   return (
     <div className="App">
-      <Grid minefield={testField}/>
+      <Grid isDisabled={isGameOver} minefield={testField} endGame={endGame}/>
     </div>
   );
 }

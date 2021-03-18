@@ -4,13 +4,23 @@ import Minefield from '../model/Minefield'
 
 /**
  * props.minefield will contain an instance of Minefield
+ * props.endGame is a function that will end the game
+ * props.isDisabled is a boolean that disables the component
  */
 let Grid = (props: any) => {
 
+    // STATE: the minefield for this game of minesweeper
     let [mineField, setMineField] = useState(props.minefield);
 
     // Reveals the square at [xCoord, yCoord]
     let revealGridSquare = (xCoord: number, yCoord: number) => {
+        
+        // if the user clicked on a square with a mine, then it's game over
+        if (mineField.field[yCoord][xCoord].label === "*") {
+            props.endGame();
+        }
+    
+        // console.log(`x: ${xCoord}, y: ${yCoord}, label: ${mineField.field[yCoord][xCoord].label}`)
 
         // copy the minefield
         let newMineField: Minefield = new Minefield(mineField.height, mineField.width, mineField.numMines);
@@ -31,7 +41,7 @@ let Grid = (props: any) => {
                         return (
                             <Square label={squareInfo.label} isRevealed={squareInfo.isRevealed}
                                     xCoord={squareInfo.xCoord} yCoord={squareInfo.yCoord}
-                                    revealSquare={revealGridSquare}/>
+                                    revealSquare={revealGridSquare} isDisabled={props.isDisabled}/>
                         );
                     })
                 }   

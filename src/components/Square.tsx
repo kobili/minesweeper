@@ -6,6 +6,7 @@ import React, {useState} from 'react';
  *                props.isRevealed is a boolean that determines whether or the square's label should be revealed
  *                props.xCoord is the x coordinate of the square in the grid
  *                props.yCoord is the y coordinate of the square in the grid
+ *                props.isDisabled is a boolean that indicates if the component is disabled
  *                
  */
 let Square = (props: any) => {
@@ -52,7 +53,7 @@ let Square = (props: any) => {
     }
 
     return (
-        <button className="square" style={style} onClick={attemptToRevealSquare} onContextMenu={flagSquare}>{label}</button>
+        <button disabled={props.isDisabled} className="square" style={style} onClick={attemptToRevealSquare} onContextMenu={flagSquare}>{label}</button>
     )
 }
 
