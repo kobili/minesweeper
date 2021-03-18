@@ -44,7 +44,11 @@ let Square = (props: any) => {
 
     // update the background color of squares which have been revealed
     let style;
-    if (isRevealed) {
+    if (isRevealed && props.label === "*") {    // paint the square red if it contains a mine
+        style = {
+            background: "red"
+        }
+    } else if (isRevealed) {
         style = {
             background: "grey"
         };
@@ -53,7 +57,10 @@ let Square = (props: any) => {
     }
 
     return (
-        <button disabled={props.isDisabled} className="square" style={style} onClick={attemptToRevealSquare} onContextMenu={flagSquare}>{label}</button>
+        <button disabled={props.isDisabled} className="square" 
+                style={style} onClick={attemptToRevealSquare} onContextMenu={flagSquare}>
+            {label}
+        </button>
     )
 }
 

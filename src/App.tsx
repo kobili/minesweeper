@@ -17,6 +17,7 @@ function App() {
   }
 
   let testField: Minefield = new Minefield(9, 9, 10);
+  // let testField: Minefield = new Minefield(3, 3, 1);
   testField.generateField();
 
   return (

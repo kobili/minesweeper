@@ -19,16 +19,19 @@ let Grid = (props: any) => {
         if (mineField.field[yCoord][xCoord].label === "*") {
             props.endGame();
         }
-    
-        // console.log(`x: ${xCoord}, y: ${yCoord}, label: ${mineField.field[yCoord][xCoord].label}`)
 
         // copy the minefield
         let newMineField: Minefield = new Minefield(mineField.height, mineField.width, mineField.numMines);
-        newMineField.field = mineField.field;
+        newMineField.copyMineField(mineField);
 
         // update the minefield
         newMineField.revealSquare(xCoord, yCoord);
 
+        // Check win condition
+        if (newMineField.squaresRevealed == (newMineField.height * newMineField.width - newMineField.numMines)) {
+            console.log("Winner winner chicken dinner");
+        }
+        
         // update the state
         setMineField(newMineField);
     }

@@ -10,6 +10,7 @@ class Minefield {
     width: number;
     numMines: number;
     field: Array< Array<SquareInfo> >;
+    squaresRevealed: number = 0;        // the number of squares that have been revealed
 
     /**
      * A minefield is a grid of squares
@@ -26,6 +27,7 @@ class Minefield {
         for (let i = 0; i < height; i++) {
             this.field[i] = new Array<SquareInfo>(width);
         }
+
     }
 
     /**
@@ -59,12 +61,12 @@ class Minefield {
             let x: number = this.randomIntegerBetween(0, this.width);
             let y: number = this.randomIntegerBetween(0, this.height);
 
-            if (this.field[x][y].label === "*") {
+            if (this.field[y][x].label === "*") {
                 // this grid space is already occupied by a mine
                 continue;
             }
 
-            this.field[x][y].label = "*";
+            this.field[y][x].label = "*";
             m--;
         }
     }
@@ -150,12 +152,14 @@ class Minefield {
         if (currentSquare.label !== "") {
             // the current square is not empty
             currentSquare.isRevealed = true;
+            this.squaresRevealed++;
             return;
         }
 
         // otherwise the current square is empty
         // recursively reveal all adjacent empty squares
         currentSquare.isRevealed = true;
+        this.squaresRevealed++;
         this.revealSquare(xCoord-1, yCoord);
         this.revealSquare(xCoord, yCoord-1);
         this.revealSquare(xCoord+1, yCoord);
@@ -171,9 +175,12 @@ class Minefield {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    test() {
-        this.generateField();
-        console.log(this.field);
+    copyMineField(source: Minefield) {
+        this.height = source.height;
+        this.width = source.width;
+        this.numMines = source.numMines;
+        this.field = source.field;
+        this.squaresRevealed = source.squaresRevealed;
     }
 }
 
