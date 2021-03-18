@@ -120,7 +120,12 @@ class Minefield {
                     }
                 }
 
-                this.field[i][j] = numAdjacents.toString()
+                if (numAdjacents !== 0) {
+                    this.field[i][j] = numAdjacents.toString();
+                } else {
+                    this.field[i][j] = "";
+                }
+                
                 
             }
         }
