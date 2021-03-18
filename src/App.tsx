@@ -4,15 +4,16 @@ import './App.css';
 
 // Other imports
 import Minefield from "./model/Minefield";
-import Square from "./components/Square";
 import Grid from './components/Grid';
 
 function App() {
 
   // test inputs
-  let testField: Minefield = new Minefield(3, 3, 1);
-  let grid: Array< Array<String> > = [["", "1", "1"], ["", "1", "*"], ["", "1", "1"]]; 
-  testField.field = grid;
+  // let testField: Minefield = new Minefield(3, 3, 1);
+  // testField.generateField();
+  // console.log(testField)
+  let testField: Minefield = new Minefield(9, 9, 10);
+  testField.generateField();
 
   return (
     <div className="App">

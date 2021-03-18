@@ -1,8 +1,15 @@
+interface SquareInfo {
+    label: String,
+    isRevealed: boolean,
+    xCoord: number,
+    yCoord: number
+}
+
 class Minefield {
     height: number;
     width: number;
     numMines: number;
-    field: Array< Array<String> >;
+    field: Array< Array<SquareInfo> >;
 
     /**
      * A minefield is a grid of squares
@@ -15,9 +22,9 @@ class Minefield {
         this.width = width;
         this.numMines = numMines;
 
-        this.field = new Array< Array<String> >(height);
+        this.field = new Array< Array<SquareInfo> >(height);
         for (let i = 0; i < height; i++) {
-            this.field[i] = new Array<String>(width);
+            this.field[i] = new Array<SquareInfo>(width);
         }
     }
 
@@ -37,7 +44,7 @@ class Minefield {
 
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
-                this.field[i][j] = "_";
+                this.field[i][j] = {label: "_", isRevealed: false, xCoord: j, yCoord: i};
             }
         }
     }
@@ -52,12 +59,12 @@ class Minefield {
             let x: number = this.randomIntegerBetween(0, this.width);
             let y: number = this.randomIntegerBetween(0, this.height);
 
-            if (this.field[x][y] === "*") {
+            if (this.field[x][y].label === "*") {
                 // this grid space is already occupied by a mine
                 continue;
             }
 
-            this.field[x][y] = "*";
+            this.field[x][y].label = "*";
             m--;
         }
     }
@@ -68,7 +75,7 @@ class Minefield {
     initializeSquares() {
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
-                if (this.field[i][j] === "*") {
+                if (this.field[i][j].label === "*") {
                     continue;
                 }
 
@@ -80,55 +87,79 @@ class Minefield {
                 let up: number = i - 1;
 
                 if (left > 0) {                         // left
-                    if (this.field[i][left] === "*") {
+                    if (this.field[i][left].label === "*") {
                         numAdjacents++;
                     }
                 }
                 if (left > 0 && up > 0) {               // upper left
-                    if (this.field[up][left] === "*") {
+                    if (this.field[up][left].label === "*") {
                         numAdjacents++;
                     }
                 }
                 if (up > 0) {                           // up
-                    if (this.field[up][j] === "*") {
+                    if (this.field[up][j].label === "*") {
                         numAdjacents++;
                     }
                 }
                 if (up > 0 && right < this.width) {    // upper-right
-                    if (this.field[up][right] === "*") {
+                    if (this.field[up][right].label === "*") {
                         numAdjacents++;
                     }
                 }
                 if (right < this.width) {               // right
-                    if (this.field[i][right] === "*") {
+                    if (this.field[i][right].label === "*") {
                         numAdjacents++;
                     }
                 }
                 if (down < this.height && right < this.width) { // lower-right
-                    if (this.field[down][right] === "*") {
+                    if (this.field[down][right].label === "*") {
                         numAdjacents++;
                     }
                 }
                 if (down < this.height) {               // down
-                    if (this.field[down][j] === "*") {
+                    if (this.field[down][j].label === "*") {
                         numAdjacents++;
                     }
                 }
                 if (down < this.height && left > 0) {           // lower-left
-                    if (this.field[down][left] === "*") {
+                    if (this.field[down][left].label === "*") {
                         numAdjacents++;
                     }
                 }
 
                 if (numAdjacents !== 0) {
-                    this.field[i][j] = numAdjacents.toString();
+                    this.field[i][j].label = numAdjacents.toString();
                 } else {
-                    this.field[i][j] = "";
+                    this.field[i][j].label = "";
                 }
                 
                 
             }
         }
+    }
+
+    revealSquare(xCoord: number, yCoord: number) {
+        if (xCoord < 0 || xCoord >= this.width || yCoord <0 || yCoord >= this.height) {
+            return;     // invalid coordinates
+        }
+
+        let currentSquare: SquareInfo = this.field[yCoord][xCoord];
+        if (currentSquare.isRevealed) {
+            return
+        }
+        if (currentSquare.label !== "") {
+            // the current square is not empty
+            currentSquare.isRevealed = true;
+            return;
+        }
+
+        // otherwise the current square is empty
+        // recursively reveal all adjacent empty squares
+        currentSquare.isRevealed = true;
+        this.revealSquare(xCoord-1, yCoord);
+        this.revealSquare(xCoord, yCoord-1);
+        this.revealSquare(xCoord+1, yCoord);
+        this.revealSquare(xCoord, yCoord+1);
     }
 
     /**
