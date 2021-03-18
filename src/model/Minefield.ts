@@ -86,22 +86,22 @@ class Minefield {
                 let down: number = i + 1;
                 let up: number = i - 1;
 
-                if (left > 0) {                         // left
+                if (left >= 0) {                         // left
                     if (this.field[i][left].label === "*") {
                         numAdjacents++;
                     }
                 }
-                if (left > 0 && up > 0) {               // upper left
+                if (left >= 0 && up >= 0) {               // upper left
                     if (this.field[up][left].label === "*") {
                         numAdjacents++;
                     }
                 }
-                if (up > 0) {                           // up
+                if (up >= 0) {                           // up
                     if (this.field[up][j].label === "*") {
                         numAdjacents++;
                     }
                 }
-                if (up > 0 && right < this.width) {    // upper-right
+                if (up >= 0 && right < this.width) {    // upper-right
                     if (this.field[up][right].label === "*") {
                         numAdjacents++;
                     }
@@ -121,7 +121,7 @@ class Minefield {
                         numAdjacents++;
                     }
                 }
-                if (down < this.height && left > 0) {           // lower-left
+                if (down < this.height && left >= 0) {           // lower-left
                     if (this.field[down][left].label === "*") {
                         numAdjacents++;
                     }
