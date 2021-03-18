@@ -12,11 +12,16 @@ let Grid = (props: any) => {
     // STATE: the minefield for this game of minesweeper
     let [mineField, setMineField] = useState(props.minefield);
 
+    // STATE: the status of the game (win/lose)
+    let [status, setStatus] = useState("")
+
     // Reveals the square at [xCoord, yCoord]
     let revealGridSquare = (xCoord: number, yCoord: number) => {
         
         // if the user clicked on a square with a mine, then it's game over
         if (mineField.field[yCoord][xCoord].label === "*") {
+            // console.log("You lost");
+            setStatus("You lost");
             props.endGame();
         }
 
@@ -28,10 +33,12 @@ let Grid = (props: any) => {
         newMineField.revealSquare(xCoord, yCoord);
 
         // Check win condition
-        if (newMineField.squaresRevealed == (newMineField.height * newMineField.width - newMineField.numMines)) {
-            console.log("Winner winner chicken dinner");
+        if (newMineField.squaresRevealed === (newMineField.height * newMineField.width - newMineField.numMines)) {
+            // console.log("Winner winner chicken dinner");
+            setStatus("You won");
+            props.endGame();
         }
-        
+
         // update the state
         setMineField(newMineField);
     }
@@ -54,6 +61,7 @@ let Grid = (props: any) => {
     return (
         <div>
             {gridOfSquares}
+            <p>{status}</p>
         </div>
     )
 }
