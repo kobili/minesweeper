@@ -11,7 +11,7 @@ let Grid = (props: any) => {
 
     let gridOfSquares = mineField.map((row: Array<String>) => {
         return (
-            <div>
+            <div className="grid-row">
                 {
                     row.map((val: String) => {
                         return (
