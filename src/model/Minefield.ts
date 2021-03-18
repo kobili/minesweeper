@@ -48,7 +48,7 @@ class Minefield {
     initializeMines() {
         let m: number = this.numMines;
 
-        while (m != 0) {
+        while (m !== 0) {
             let x: number = this.randomIntegerBetween(0, this.width);
             let y: number = this.randomIntegerBetween(0, this.height);
 
