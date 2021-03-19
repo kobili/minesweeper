@@ -63,13 +63,13 @@ function App() {
 
   // Ends the game
   let endGame = () => {
-    console.log("Game over");
+    // console.log("Game over");
     setIsGameOver(true);
   }
 
   // Starts a new game according to user input
   let startNewGame = (newSettings: [number, number, number]) => {
-    console.log("starting new game...")
+    // console.log("starting new game...")
     setMineField(new Minefield(newSettings[1], newSettings[0], newSettings[2]));
     setIsGameOver(false);
   }
