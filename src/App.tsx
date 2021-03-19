@@ -6,25 +6,69 @@ import './App.css';
 import Minefield from "./model/Minefield";
 import Grid from './components/Grid';
 import Timer from './components/Timer';
+import NewGameForm from './components/NewGameForm';
+
 
 function App() {
+
+  // STATE: Stores the minefield for a game of minesweeper
+  let [mineField, setMineField] = useState(new Minefield(9, 9, 10));
 
   // STATE: Whether or not the game is over
   let [isGameOver, setIsGameOver] = useState(false);
 
+  // STATE: stores the the number of horizontal and vertical squares and the number of mines
+  let [gameSettings, setGameSettings] = useState([9, 9, 10])
+
+  // STATE: string representing the status of the game (win/lose)
+  let [status, setStatus] = useState("")
+
+   // Reveals the square at [xCoord, yCoord]
+  let revealGridSquare = (xCoord: number, yCoord: number) => {
+        
+    // if the user clicked on a square with a mine, then it's game over
+    if (mineField.field[yCoord][xCoord].label === "*") {
+        setStatus("You lost");
+        endGame();
+    }
+
+    // copy the minefield
+    let newMineField: Minefield = new Minefield(mineField.height, mineField.width, mineField.numMines);
+    newMineField.copyMineField(mineField);
+
+    // update the minefield
+    newMineField.revealSquare(xCoord, yCoord);
+
+    // Check win condition
+    if (newMineField.squaresRevealed === (newMineField.height * newMineField.width - newMineField.numMines)) {
+        // console.log("Winner winner chicken dinner");
+        setStatus("You won");
+        endGame();
+    }
+
+    // update the state
+    setMineField(newMineField);
+  } 
+
+  // Ends the game
   let endGame = () => {
     console.log("Game over");
     setIsGameOver(true);
   }
 
-  // let testField: Minefield = new Minefield(9, 9, 10);
-  let testField: Minefield = new Minefield(3, 3, 1);
-  testField.generateField();
+  // Starts a new game according to user input
+  let startNewGame = (newSettings: [number, number, number]) => {
+    console.log("starting new game...")
+    setGameSettings(newSettings);
+    setMineField(new Minefield(newSettings[1], newSettings[0], newSettings[2]));
+    setIsGameOver(false);
+  }
 
   return (
     <div className="App">
-      <Timer isDisabled={isGameOver}/>
-      <Grid isDisabled={isGameOver} minefield={testField} endGame={endGame}/>
+      {/* <Timer isDisabled={isGameOver}/> */}
+      <Grid isDisabled={isGameOver} mineField={mineField} revealGridSquare={revealGridSquare} status={status}/>
+      <NewGameForm updateGame={startNewGame}/>
     </div>
   );
 }

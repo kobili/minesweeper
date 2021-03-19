@@ -1,49 +1,15 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Square from './Square'
-import Minefield from '../model/Minefield'
 
 /**
- * props.minefield will contain an instance of Minefield
- * props.endGame is a function that will end the game
+ * props.mineField will contain an instance of a minesweeper field
  * props.isDisabled is a boolean that disables the component
+ * props.revealGridSquare is a function that is called when the user clicks on a square
+ * props.status is text that is displayed when the game is either won or loss
  */
 let Grid = (props: any) => {
 
-    // STATE: the minefield for this game of minesweeper
-    let [mineField, setMineField] = useState(props.minefield);
-
-    // STATE: the status of the game (win/lose)
-    let [status, setStatus] = useState("")
-
-    // Reveals the square at [xCoord, yCoord]
-    let revealGridSquare = (xCoord: number, yCoord: number) => {
-        
-        // if the user clicked on a square with a mine, then it's game over
-        if (mineField.field[yCoord][xCoord].label === "*") {
-            // console.log("You lost");
-            setStatus("You lost");
-            props.endGame();
-        }
-
-        // copy the minefield
-        let newMineField: Minefield = new Minefield(mineField.height, mineField.width, mineField.numMines);
-        newMineField.copyMineField(mineField);
-
-        // update the minefield
-        newMineField.revealSquare(xCoord, yCoord);
-
-        // Check win condition
-        if (newMineField.squaresRevealed === (newMineField.height * newMineField.width - newMineField.numMines)) {
-            // console.log("Winner winner chicken dinner");
-            setStatus("You won");
-            props.endGame();
-        }
-
-        // update the state
-        setMineField(newMineField);
-    }
-
-    let gridOfSquares = mineField.field.map((row: Array<any>) => {  
+    let gridOfSquares = props.mineField.field.map((row: Array<any>) => {  
         return (
             <div className="grid-row">
                 {
@@ -51,7 +17,7 @@ let Grid = (props: any) => {
                         return (
                             <Square label={squareInfo.label} isRevealed={squareInfo.isRevealed}
                                     xCoord={squareInfo.xCoord} yCoord={squareInfo.yCoord}
-                                    revealSquare={revealGridSquare} isDisabled={props.isDisabled}/>
+                                    revealSquare={props.revealGridSquare} isDisabled={props.isDisabled}/>
                         );
                     })
                 }   
@@ -61,7 +27,7 @@ let Grid = (props: any) => {
     return (
         <div>
             {gridOfSquares}
-            <p>{status}</p>
+            <p>{props.isDisabled ? props.status : ""}</p>
         </div>
     )
 }

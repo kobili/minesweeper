@@ -27,7 +27,8 @@ class Minefield {
         for (let i = 0; i < height; i++) {
             this.field[i] = new Array<SquareInfo>(width);
         }
-
+        
+        this.generateField();
     }
 
     /**
