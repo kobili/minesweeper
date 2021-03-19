@@ -18,7 +18,7 @@ function App() {
   let [isGameOver, setIsGameOver] = useState(false);
 
   // STATE: string representing the status of the game (win/lose)
-  let [status, setStatus] = useState("")
+  let [status, setStatus] = useState("");
 
    // Reveals the square at [xCoord, yCoord]
   let revealGridSquare = (xCoord: number, yCoord: number) => {
@@ -47,6 +47,20 @@ function App() {
     setMineField(newMineField);
   } 
 
+   // Flags the square at [xCoord, yCoord]
+   let flagGridSquare = (xCoord: number, yCoord: number) => {
+
+    // copy the minefield
+    let newMineField: Minefield = new Minefield(mineField.height, mineField.width, mineField.numMines);
+    newMineField.copyMineField(mineField);
+
+    // update the minefield
+    newMineField.flagSquare(xCoord, yCoord);
+
+    // update the state
+    setMineField(newMineField);
+  } 
+
   // Ends the game
   let endGame = () => {
     console.log("Game over");
@@ -63,7 +77,8 @@ function App() {
   return (
     <div className="App">
       {/* <Timer isDisabled={isGameOver}/> */}
-      <Grid isDisabled={isGameOver} mineField={mineField} revealGridSquare={revealGridSquare} status={status}/>
+      <Grid isDisabled={isGameOver} mineField={mineField} revealGridSquare={revealGridSquare}
+            flagGridSquare={flagGridSquare} status={status}/>
       <NewGameForm updateGame={startNewGame}/>
     </div>
   );

@@ -1,6 +1,7 @@
 interface SquareInfo {
     label: String,
     isRevealed: boolean,
+    isFlagged: boolean,
     xCoord: number,
     yCoord: number
 }
@@ -47,7 +48,7 @@ class Minefield {
 
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
-                this.field[i][j] = {label: "_", isRevealed: false, xCoord: j, yCoord: i};
+                this.field[i][j] = {label: "_", isRevealed: false, isFlagged: false, xCoord: j, yCoord: i};
             }
         }
     }
@@ -148,8 +149,13 @@ class Minefield {
 
         let currentSquare: SquareInfo = this.field[yCoord][xCoord];
         if (currentSquare.isRevealed) {
-            return
+            return;
         }
+
+        if (currentSquare.isFlagged) {
+            return;
+        }
+
         if (currentSquare.label !== "") {
             // the current square is not empty
             currentSquare.isRevealed = true;
@@ -165,6 +171,19 @@ class Minefield {
         this.revealSquare(xCoord, yCoord-1);
         this.revealSquare(xCoord+1, yCoord);
         this.revealSquare(xCoord, yCoord+1);
+    }
+
+    flagSquare = (xCoord: number, yCoord: number) => {
+        if (xCoord < 0 || xCoord >= this.width || yCoord <0 || yCoord >= this.height) {
+            return;     // invalid coordinates
+        }
+
+        let currentSquare: SquareInfo = this.field[yCoord][xCoord];
+        if (currentSquare.isRevealed) {
+            return;
+        }
+
+        currentSquare.isFlagged = !currentSquare.isFlagged;
     }
 
     /**

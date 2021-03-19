@@ -5,6 +5,7 @@ import Square from './Square'
  * props.mineField will contain an instance of a minesweeper field
  * props.isDisabled is a boolean that disables the component
  * props.revealGridSquare is a function that is called when the user clicks on a square
+ * props.flagGridSquare is a function that is called when the user right clicks on a square
  * props.status is text that is displayed when the game is either won or loss
  */
 let Grid = (props: any) => {
@@ -16,6 +17,7 @@ let Grid = (props: any) => {
                     row.map((squareInfo: any) => {
                         return (
                             <Square label={squareInfo.label} isRevealed={squareInfo.isRevealed}
+                                    isFlagged={squareInfo.isFlagged} flagSquare={props.flagGridSquare}
                                     xCoord={squareInfo.xCoord} yCoord={squareInfo.yCoord}
                                     revealSquare={props.revealGridSquare} isDisabled={props.isDisabled}/>
                         );
