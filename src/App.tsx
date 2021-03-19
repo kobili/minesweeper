@@ -17,9 +17,6 @@ function App() {
   // STATE: Whether or not the game is over
   let [isGameOver, setIsGameOver] = useState(false);
 
-  // STATE: stores the the number of horizontal and vertical squares and the number of mines
-  let [gameSettings, setGameSettings] = useState([9, 9, 10])
-
   // STATE: string representing the status of the game (win/lose)
   let [status, setStatus] = useState("")
 
@@ -59,7 +56,6 @@ function App() {
   // Starts a new game according to user input
   let startNewGame = (newSettings: [number, number, number]) => {
     console.log("starting new game...")
-    setGameSettings(newSettings);
     setMineField(new Minefield(newSettings[1], newSettings[0], newSettings[2]));
     setIsGameOver(false);
   }
