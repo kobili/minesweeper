@@ -23,13 +23,13 @@ function App() {
   // STATE: the amount of seconds since the current game started
   let [elapsedTime, setElapsedTime] = useState(0);
 
-  // update the timer
-  let timer = setTimeout(() => {
+  // update the elapsedTime - add one second each second
+  let updateTimer = setTimeout(() => {
     setElapsedTime(elapsedTime + 1);
   }, 1000);
 
   if (isGameOver) {
-    clearTimeout(timer);
+    clearTimeout(updateTimer);
   }
 
   // Reveals the square at [xCoord, yCoord]
