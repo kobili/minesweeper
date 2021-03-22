@@ -76,7 +76,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Timer isDisabled={isGameOver}/> */}
+      <Timer isDisabled={isGameOver}/>
       <Grid isDisabled={isGameOver} mineField={mineField} revealGridSquare={revealGridSquare}
             flagGridSquare={flagGridSquare} status={status}/>
       <NewGameForm updateGame={startNewGame}/>
