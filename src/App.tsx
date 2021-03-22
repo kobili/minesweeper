@@ -32,7 +32,7 @@ function App() {
     clearTimeout(timer);
   }
 
-   // Reveals the square at [xCoord, yCoord]
+  // Reveals the square at [xCoord, yCoord]
   let revealGridSquare = (xCoord: number, yCoord: number) => {
         
     // if the user clicked on a square with a mine, then it's game over
@@ -59,8 +59,8 @@ function App() {
     setMineField(newMineField);
   } 
 
-   // Flags the square at [xCoord, yCoord]
-   let flagGridSquare = (xCoord: number, yCoord: number) => {
+  // Flags the square at [xCoord, yCoord]
+  let flagGridSquare = (xCoord: number, yCoord: number) => {
 
     // copy the minefield
     let newMineField: Minefield = new Minefield(mineField.height, mineField.width, mineField.numMines);
