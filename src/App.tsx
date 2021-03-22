@@ -32,7 +32,9 @@ function App() {
     clearTimeout(updateTimer);
   }
 
-  // Reveals the square at [xCoord, yCoord]
+  /* 
+    Reveals the square at [xCoord, yCoord]
+  */
   let revealGridSquare = (xCoord: number, yCoord: number) => {
         
     // if the user clicked on a square with a mine, then it's game over
@@ -59,7 +61,9 @@ function App() {
     setMineField(newMineField);
   } 
 
-  // Flags the square at [xCoord, yCoord]
+  /*
+    Flags the square at [xCoord, yCoord]
+  */
   let flagGridSquare = (xCoord: number, yCoord: number) => {
 
     // copy the minefield
@@ -73,13 +77,17 @@ function App() {
     setMineField(newMineField);
   } 
 
-  // Ends the game
+  /* 
+    Ends the game
+  */
   let endGame = () => {
     // console.log("Game over");
     setIsGameOver(true);
   }
 
-  // Starts a new game according to user input
+  /*
+    Starts a new game according to user input
+  */
   let startNewGame = (newSettings: [number, number, number]) => {
     // console.log("starting new game...")
     setMineField(new Minefield(newSettings[1], newSettings[0], newSettings[2]));
