@@ -167,10 +167,14 @@ class Minefield {
         // recursively reveal all adjacent empty squares
         currentSquare.isRevealed = true;
         this.squaresRevealed++;
-        this.revealSquare(xCoord-1, yCoord);
-        this.revealSquare(xCoord, yCoord-1);
-        this.revealSquare(xCoord+1, yCoord);
-        this.revealSquare(xCoord, yCoord+1);
+        this.revealSquare(xCoord-1, yCoord);    // left
+        this.revealSquare(xCoord-1, yCoord-1)   // up-left
+        this.revealSquare(xCoord, yCoord-1);    // up
+        this.revealSquare(xCoord+1, yCoord-1);  // up-right
+        this.revealSquare(xCoord+1, yCoord);    // right
+        this.revealSquare(xCoord+1, yCoord+1);  // down-right
+        this.revealSquare(xCoord, yCoord+1);    // down
+        this.revealSquare(xCoord-1, yCoord+1);  // down-left
     }
 
     flagSquare = (xCoord: number, yCoord: number) => {
