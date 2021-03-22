@@ -20,6 +20,18 @@ function App() {
   // STATE: string representing the status of the game (win/lose)
   let [status, setStatus] = useState("");
 
+  // STATE: the amount of seconds since the current game started
+  let [elapsedTime, setElapsedTime] = useState(0);
+
+  // update the timer
+  let timer = setTimeout(() => {
+    setElapsedTime(elapsedTime + 1);
+  }, 1000);
+
+  if (isGameOver) {
+    clearTimeout(timer);
+  }
+
    // Reveals the square at [xCoord, yCoord]
   let revealGridSquare = (xCoord: number, yCoord: number) => {
         
@@ -71,12 +83,13 @@ function App() {
   let startNewGame = (newSettings: [number, number, number]) => {
     // console.log("starting new game...")
     setMineField(new Minefield(newSettings[1], newSettings[0], newSettings[2]));
+    setElapsedTime(0);
     setIsGameOver(false);
   }
 
   return (
     <div className="App">
-      <Timer isDisabled={isGameOver}/>
+      <Timer secondsElapsed={elapsedTime}/>
       <Grid isDisabled={isGameOver} mineField={mineField} revealGridSquare={revealGridSquare}
             flagGridSquare={flagGridSquare} status={status}/>
       <NewGameForm updateGame={startNewGame}/>

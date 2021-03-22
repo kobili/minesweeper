@@ -2,15 +2,13 @@ import React, {useState, useEffect} from 'react'
 
 /**
  * 
- * @param props : props.isDisabled determines if the timer should be stopped
- * @returns 
+ * @param props : props.secondsElapsed is the number of seconds since the game started
+ *                
  */
 let Timer = (props: any) => {
 
-    let [elapsedTime, setElapsedTime] = useState(0);
-
-    let minutes: number = Math.floor(elapsedTime / 60);
-    let seconds: number = elapsedTime % 60;
+    let minutes: number = Math.floor(props.secondsElapsed / 60);
+    let seconds: number = props.secondsElapsed % 60;
 
     let minutesDisplay: string = minutes.toString();
     if (minutesDisplay.length === 1) {
@@ -20,14 +18,6 @@ let Timer = (props: any) => {
     let secondsDisplay: string = seconds.toString();
     if (secondsDisplay.length === 1) {
         secondsDisplay = "0" + secondsDisplay;
-    }
-
-    let timer = setTimeout(() => {
-        setElapsedTime(elapsedTime + 1);
-    }, 1000);
-
-    if (props.isDisabled) {
-        clearTimeout(timer);
     }
 
 
