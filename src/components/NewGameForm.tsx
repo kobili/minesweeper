@@ -6,6 +6,11 @@ import React, { useState } from 'react';
  */
 let NewGameForm = (props: any) => {
 
+    // // Difficulty selections - gives specific height, width and mine amount
+    // let BEGINNER: [number, number, number] = [9, 9, 10];
+    // let INTERMEDIATE: [number, number, number] = [16, 16, 40];
+    // let EXPERT: [number, number, number] = [16, 30, 99];
+
     // STATE: Variables which store the various input parameters
     let [numHorizontal, setNumHorizontal] = useState(9);
     let [numVertical, setNumVertical] = useState(9);
